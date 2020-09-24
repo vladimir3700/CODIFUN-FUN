@@ -1,0 +1,315 @@
+{
+	"info": {
+		"_postman_id": "36be4b8f-bcbf-46d7-a203-82bad6215f2b",
+		"name": "Collection_add",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "wallet_create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "716a6103-43f0-42dc-b6cc-d04934de8f56",
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"var cur = pm.environment.get('currency');\r",
+							"var all_keys = pm.response.json();\r",
+							"var curval = all_keys.wallet_id;\r",
+							"if (cur == ('btc'))\r",
+							"{\r",
+							"console.log(\"Create BTC wallet:\");\r",
+							"console.log(\"Wallet_number:\"+curval);\r",
+							"}\r",
+							"if (cur == ('eth'))\r",
+							"{\r",
+							"    console.log(\"Create ETH wallet:\");\r",
+							"    console.log(\"Wallet_number:\"+curval);\r",
+							"}\r",
+							"if (cur == ('ltc'))\r",
+							"{\r",
+							"    console.log(\"Create LTC wallet:\");\r",
+							"    console.log(\"Wallet_number:\"+curval);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "dfb42e94-da38-4e20-82c1-6cab8b2b8f4a",
+						"exec": [
+							"var ltc = pm.environment.set('currency', 'btc');\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host1}}{{currency}}{{host2}}{{post1}}",
+					"host": [
+						"{{host1}}{{currency}}{{host2}}{{post1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "adress_list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7e3755ee-a898-4030-b928-42125e796a69",
+						"exec": [
+							"var l = \"Bitcoin testnet wallet API\";\r",
+							"pm.test(\"Response property matches environment variable\", function () {\r",
+							"  pm.expect(pm.response.json().about).to.eql(l);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a8688021-0bd4-4764-8aef-4a44883d25f9",
+						"exec": [
+							"var ltc = pm.environment.set('currency', 'btc');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host1}}{{currency}}{{host2}}{{post2}}{{post3}}",
+					"host": [
+						"{{host1}}{{currency}}{{host2}}{{post2}}{{post3}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "wallet_statistic",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7ba2183c-a599-48a0-b8af-c2e890f27b91",
+						"exec": [
+							"var ltc = pm.environment.set('currency', 'btc');"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "8519091f-7a18-4920-bfc7-a18675f0a4b7",
+						"exec": [
+							"pm.test(\"content-type from header\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"pm.test(\"content-type from header\", () => {\r",
+							"  pm.response.to.have.header(\"Date\");\r",
+							"});\r",
+							"pm.test(\"content-type from header\", () => {\r",
+							"  pm.response.to.have.header(\"Content-Length\");\r",
+							"});\r",
+							"pm.test(\"content-type from header\", () => {\r",
+							"  pm.response.to.have.header(\"Ratelimit-Limit\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host1}}{{currency}}{{host2}}{{get4}}{{get5}}",
+					"host": [
+						"{{host1}}{{currency}}{{host2}}{{get4}}{{get5}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_callback",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae70cfe5-49e6-442f-bbd3-8fa8144bc100",
+						"exec": [
+							"\r",
+							"if (!pm.response.json().name) {\r",
+							"  console.log(\"name was not found\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c4793a94-67d9-40f3-bc4f-40b07faf3cec",
+						"exec": [
+							"var ltc = pm.environment.set('currency', 'btc');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host1}}{{currency}}{{host2}}{{get7}}{{get8}}",
+					"host": [
+						"{{host1}}{{currency}}{{host2}}{{get7}}{{get8}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "*change_inverting_currency",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a3475fcd-d58b-4d78-8467-186fcd0f0230",
+						"exec": [
+							"var cripto = pm.environment.get('currency2');\r",
+							"if (cripto == 'btc')\r",
+							"{\r",
+							"    pm.environment.set('currency2', 'eth')\r",
+							"    console.log (\"bitcoin change to ethereum\");\r",
+							"}\r",
+							"if (cripto == 'eth')\r",
+							"{\r",
+							"    pm.environment.set('currency2', 'eth')\r",
+							"    console.log (\"ethereum change to bitcoin\");\r",
+							"}\r",
+							"if (cripto == 'ltc')\r",
+							"{\r",
+							"    pm.environment.set('currency2', 'btc')\r",
+							"    console.log (\"ethereum change to bitcoin\");\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b90d0ef7-8807-4642-83b9-04dfb0bfe324",
+						"exec": [
+							"var cur2 = pm.environment.get('currency2');\r",
+							"var all_keys = pm.response.json();\r",
+							"var curval = all_keys.wallet_id;\r",
+							"if (cur2 == ('btc'))\r",
+							"{\r",
+							"console.log(\"Create BTC wallet:\");\r",
+							"console.log(\"Wallet_number:\"+curval);\r",
+							"}\r",
+							"if (cur2 == ('eth'))\r",
+							"{\r",
+							"    console.log(\"Create ETH wallet:\");\r",
+							"    console.log(\"Wallet_number:\"+curval);\r",
+							"}\r",
+							"if (cur2 == ('ltc'))\r",
+							"{\r",
+							"    console.log(\"Create LTC wallet:\");\r",
+							"    console.log(\"Wallet_number:\"+curval);\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host1}}{{currency2}}{{host2}}{{post1}}",
+					"host": [
+						"{{host1}}{{currency2}}{{host2}}{{post1}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
